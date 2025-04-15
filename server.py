@@ -7,7 +7,7 @@ from io import StringIO
 
 
 from utils.file import create_mcp_image_set, create_mcp_video_set
-from utils.types import CreateImage, CreateVideo, ImageRef, ModifyImageRef
+from utils.types import CreateImage, CreateVideo, ImageRef
 
 
 mcp = FastMCP("Luma MCP")
@@ -20,9 +20,9 @@ async def create_image(
     aspect_ratio: str = "16:9",
     model: str = "photon-1",
     image_ref: list[ImageRef] | None = None,
-    style_ref: list[ImageRef] | None = None,
+    style_ref: ImageRef | None = None,
     character_ref: list[str] | None = None,
-    modify_image_ref: ModifyImageRef | None = None,
+    modify_image_ref: ImageRef | None = None,
 ):
     """Generates AI images using Luma API based on the provided parameters.
 

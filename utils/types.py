@@ -6,19 +6,14 @@ class ImageRef(BaseModel):
     weight: float = 1.0
 
 
-class ModifyImageRef(BaseModel):
-    url: str
-    weight: float = 1.0
-
-
 class CreateImage(BaseModel):
     prompt: str
     aspect_ratio: str = "16:9"
     model: str = "photon-1"
     image_ref: list[ImageRef] | None = None
-    style_ref: list[ImageRef] | None = None
+    style_ref: ImageRef | None = None
     character_ref: list[str] | None = None
-    modify_image_ref: ModifyImageRef | None = None
+    modify_image_ref: ImageRef | None = None
 
 
 class CreateVideo(BaseModel):
