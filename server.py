@@ -26,27 +26,26 @@ async def create_image(
 ):
     """Generates AI images using Luma API based on the provided parameters.
 
-    Parameters:
-        prompt: Text description of the image to generate
+    [Generation Notes]
+        - When generating an image prompt, be detailed and enhance the prompt as necessary.
+        - You can add additional stylistic details to the prompt if the user desires.
+        - Use the defintions specified in [PARAMETERS] to guide the generation.
+
+    [Parameters]
+        prompt: Text description of the image to generate 
         aspect_ratio: Image dimensions - "1:1" (square), "16:9" (landscape), "9:16" (portrait),
-                     "4:3", "3:4", "21:9", "9:21" (default: "16:9")
-        model: AI model to use - "photon-1" (higher quality), "photon-flash-1" (faster) (default: "photon-1")
-        image_ref: Up to 8 reference images with weights to influence generation (optional)
-        style_ref: A single reference image with weight to influence style (optional)
-        character_ref: Up to 4 character references as image URLs (optional)
-        modify_image_ref: Single image to modify/enhance (optional)
-
-    Returns:
-        List containing triplets of [image_data, image_url, generation_id] for each image:
-        - image_data: Image object that can be displayed directly in the MCP interface
-        - image_url: String with URL to the generated image on Luma CDN
-        - generation_id: Unique ID that can be used for referencing in future operations
-
-    Technical Notes:
-        - Performance: Uses parallel processing with asyncio.gather() for concurrent generation
-        - Error Handling: All exceptions include detailed stack traces for debugging
-        - Response Time: Typical generation takes 5-15 seconds depending on model complexity
-        - For the prompt please as specific as possible and enhance the prompt as needed.
+                     "4:3", "3:4", "21:9", "9:21" (default: "16:9") 
+        model: AI model to use - "photon-1" (higher quality), "photon-flash-1" (faster) (default: "photon-1") 
+        image_ref: Up to 8 reference images with weights to influence generation (optional) 
+        style_ref: A single reference image with weight to influence style (optional) 
+        character_ref: Up to 4 character references as image URLs (optional) 
+        modify_image_ref: Single image to modify/enhance (optional) 
+    
+    [Returns]
+        List containing triplets of [image_data, image_url, generation_id] for each image: 
+        - image_data: Image object that can be displayed directly in the MCP interface 
+        - image_url: String with URL to the generated image on Luma CDN 
+        - generation_id: Unique ID that can be used for referencing in future operations  
     """
     try:
         ssl_context = ssl._create_unverified_context()
@@ -83,34 +82,33 @@ async def create_video(
     frame0_id: str | None = None,
     frame1_id: str | None = None,
 ):
-    """Generates AI videos using Luma API based on the provided parameters.
+    """Generates AI videos using Luma API based on the provided parameters. 
 
-    Parameters:
-        prompt: Text description of the video to generate
+    [Generation Notes]
+        - When generating a video prompt, be detailed and enhance the prompt as necessary.
+        - You can add additional stylistic details to the prompt if the user desires.
+        - Use the defintions specified in [PARAMETERS] to guide the generation.
+        - If the user asks for 10s video or a longer video, default to 9s.
+
+    [Parameters]
+        prompt: Text description of the video to generate 
         aspect_ratio: Video dimensions - "1:1" (square), "16:9" (landscape), "9:16" (portrait),
-                     "4:3", "3:4", "21:9", "9:21" (default: "16:9")
-        model: AI model to use - "ray-2" (standard), "ray-flash-2" (faster), "ray-1-6" (legacy) (default: "ray-2")
-        loop: Whether the video should loop seamlessly (default: False)
-        resolution: Video quality - "4k", "1080p", "720p", "540p" (default: "720p")
-        duration: Video length - "5s" or "9s" (default: "5s")
-        frame0_image: URL of image to use as first frame (optional)
-        frame1_image: URL of image to use as last frame (optional)
-        frame0_id: Generation ID for first frame (UUID v4) (optional)
-        frame1_id: Generation ID for last frame (UUID v4) (optional)
-
-    Returns:
-        List containing quartets of [thumbnail_image, video_url, image_url, generation_id] for each video:
-        - thumbnail_image: Image object that can be displayed directly in the MCP interface
-        - video_url: String with URL to the generated video on Luma CDN
-        - image_url: String with URL to the thumbnail image on Luma CDN
-        - generation_id: Unique ID that can be used for referencing in future operations
-
-    Technical Notes:
-        - Performance: Uses parallel processing with asyncio.gather() for concurrent generation
-        - Error Handling: All exceptions include detailed stack traces for debugging
-        - Keyframes: Providing frame0_image/frame1_image gives more control over video start/end points
-        - Response Time: Typical video generation takes 15-60 seconds depending on duration and resolution
-        - For the prompt please as specific as possible and enhance the prompt as needed.
+                     "4:3", "3:4", "21:9", "9:21" (default: "16:9") 
+        model: AI model to use - "ray-2" (standard), "ray-flash-2" (faster), "ray-1-6" (legacy) (default: "ray-2") 
+        loop: Whether the video should loop seamlessly (default: False) 
+        resolution: Video quality - "4k", "1080p", "720p", "540p" (default: "720p") 
+        duration: Video length - "5s" or "9s" (default: "5s") 
+        frame0_image: URL of image to use as first frame (optional) 
+        frame1_image: URL of image to use as last frame (optional) 
+        frame0_id: Generation ID for first frame (UUID v4) (optional) 
+        frame1_id: Generation ID for last frame (UUID v4) (optional) 
+    
+    [Returns]
+        List containing quartets of [thumbnail_image, video_url, image_url, generation_id] for each video: 
+        - thumbnail_image: Image object that can be displayed directly in the MCP interface 
+        - video_url: String with URL to the generated video on Luma CDN 
+        - image_url: String with URL to the thumbnail image on Luma CDN 
+        - generation_id: Unique ID that can be used for referencing in future operations  
     """
     try:
         ssl_context = ssl._create_unverified_context()
