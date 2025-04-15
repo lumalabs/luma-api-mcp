@@ -11,11 +11,11 @@ from utils.types import CreateImage, CreateVideo, ImageRef, ModifyImageRef
 
 
 mcp = FastMCP("Luma MCP")
+count = 1
 
 
 @mcp.tool()
 async def create_image(
-    count: int,
     prompt: str,
     aspect_ratio: str = "16:9",
     model: str = "photon-1",
@@ -27,7 +27,6 @@ async def create_image(
     """Generates AI images using Luma API based on the provided parameters.
 
     Parameters:
-        count: Number of images to generate (default: 1)
         prompt: Text description of the image to generate
         aspect_ratio: Image dimensions - "1:1" (square), "16:9" (landscape), "9:16" (portrait),
                      "4:3", "3:4", "21:9", "9:21" (default: "16:9")
@@ -50,16 +49,6 @@ async def create_image(
         - Rate Limits: Be aware of Luma API rate limits when setting high count values
         - Response Time: Typical generation takes 5-15 seconds depending on model complexity
         - For the prompt please as specific as possible and enhance the prompt as needed.
-
-    Example:
-        ```python
-        # Generate 3 landscape images of mountains
-        results = await create_image(
-            count=3,
-            prompt="majestic mountains with snow peaks and blue sky",
-            aspect_ratio="16:9"
-        )
-        ```
     """
     try:
         ssl_context = ssl._create_unverified_context()
@@ -90,7 +79,6 @@ async def create_image(
 
 @mcp.tool()
 async def create_video(
-    count: int,
     prompt: str,
     aspect_ratio: str = "16:9",
     model: str = "ray-2",
@@ -105,7 +93,6 @@ async def create_video(
     """Generates AI videos using Luma API based on the provided parameters.
 
     Parameters:
-        count: Number of videos to generate (default: 1)
         prompt: Text description of the video to generate
         aspect_ratio: Video dimensions - "1:1" (square), "16:9" (landscape), "9:16" (portrait),
                      "4:3", "3:4", "21:9", "9:21" (default: "16:9")
@@ -133,17 +120,6 @@ async def create_video(
         - Rate Limits: Be aware of Luma API rate limits when setting high count values
         - Response Time: Typical video generation takes 15-60 seconds depending on duration and resolution
         - For the prompt please as specific as possible and enhance the prompt as needed.
-
-    Example:
-        ```python
-        # Generate a looping 5-second video of ocean waves
-        results = await create_video(
-            count=1,
-            prompt="beautiful ocean waves crashing on a sandy beach",
-            loop=True,
-            duration="5s"
-        )
-        ```
     """
     try:
         ssl_context = ssl._create_unverified_context()
