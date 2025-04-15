@@ -1,6 +1,6 @@
 # Luma MCP
 
-## Setup & Run
+## Setup
 
 1. Install Claude Desktop App or any MCP client
 2. Get API Key from https://lumalabs.ai/api/keys
