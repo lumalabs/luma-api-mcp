@@ -68,11 +68,9 @@ async def create_mcp_image_set(
     )
     image = await create_mcp_image(image=image_url, session=session)
     return [
-        "START IMAGE",
         image,
         f"image_url: {image_url}",
         f"generation_id: {id}",
-        "END IMAGE",
     ]
 
 
@@ -125,11 +123,9 @@ async def create_mcp_video_set(
     image_url = video_object.get("image", None)
     image = await create_mcp_image(image=image_url, session=session)
     return [
-        "START VIDEO",
         image,
         "above image is the thumbnail of the video",
         f"video_url: {video_url}",
         f"image_url: {image_url}",
         f"generation_id: {id}",
-        "END VIDEO",
     ]
