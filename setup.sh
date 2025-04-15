@@ -248,7 +248,7 @@ jq \
   --arg server_path "$SERVER_PY_PATH" \
   --arg api_key "$LUMA_API_KEY" \
   --arg python_cmd "python3.10" \
-  '.mcpServers."Luma MCP" = {
+  '.mcpServers."Luma API MCP" = {
       command: $uv_path,
       args: [
           "run",

@@ -61,13 +61,8 @@ async def create_image(
                 character_ref=character_ref,
                 modify_image_ref=modify_image_ref,
             )
-            tasks = [
-                create_mcp_image_set(params=params, session=session)
-                for _ in range(count)
-            ]
-            results = await asyncio.gather(*tasks)
-            flattened_results = [item for sublist in results for item in sublist]
-            return flattened_results
+            result = await create_mcp_image_set(params=params, session=session)
+            return result
     except Exception as e:
         str_io = StringIO()
         traceback.print_exc(file=str_io)
@@ -133,13 +128,8 @@ async def create_video(
                 frame0_id=frame0_id,
                 frame1_id=frame1_id,
             )
-            tasks = [
-                create_mcp_video_set(params=params, session=session)
-                for _ in range(count)
-            ]
-            results = await asyncio.gather(*tasks)
-            flattened_results = [item for sublist in results for item in sublist]
-            return flattened_results
+            result = await create_mcp_video_set(params=params, session=session)
+            return result
     except Exception as e:
         str_io = StringIO()
         traceback.print_exc(file=str_io)
