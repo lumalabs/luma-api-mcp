@@ -35,6 +35,7 @@ info "Detected platform: $PLATFORM"
 # --- Dependency Installation ---
 JQ_INSTALLED=false
 UV_INSTALLED=false
+PYTHON310_INSTALLED=false
 
 # Check for jq
 if command_exists jq; then
@@ -134,6 +135,45 @@ if [ "$UV_INSTALLED" = false ]; then
     error "uv is required but could not be installed or found in PATH. Please install it manually and re-run the script."
 fi
 
+# Check for Python 3.10
+PYTHON310_CMD="python3.10"
+if command_exists "$PYTHON310_CMD"; then
+    info "Python 3.10 ($PYTHON310_CMD) is already installed."
+    PYTHON310_INSTALLED=true
+else
+    info "Python 3.10 ($PYTHON310_CMD) not found. Attempting installation/check..."
+    case "$PLATFORM" in
+        macos)
+            if command_exists brew; then
+                info "Attempting to install python@3.10 using Homebrew..."
+                brew install python@3.10 || warn "Failed to install python@3.10 using Homebrew. It might already be installed or another issue occurred."
+                # Re-check after attempting install
+                if command_exists "$PYTHON310_CMD"; then
+                    info "Python 3.10 ($PYTHON310_CMD) found after brew install attempt."
+                    PYTHON310_INSTALLED=true
+                else
+                    warn "Could not find $PYTHON310_CMD even after attempting brew install. Please ensure Python 3.10 is installed and accessible as '$PYTHON310_CMD'."
+                fi
+            else
+                warn "Homebrew not found. Please install Python 3.10 manually (e.g., 'brew install python@3.10') and ensure it's available as '$PYTHON310_CMD'."
+            fi
+            ;;
+        *) # Linux, Windows, etc.
+            warn "Automatic installation of Python 3.10 is only supported via Homebrew on macOS."
+            warn "Please ensure Python 3.10 is installed manually and accessible as '$PYTHON310_CMD'."
+            # Check if it exists anyway after the warning
+             if command_exists "$PYTHON310_CMD"; then
+                 info "Found $PYTHON310_CMD."
+                 PYTHON310_INSTALLED=true
+             fi
+            ;;
+    esac
+fi
+
+if [ "$PYTHON310_INSTALLED" = false ]; then
+    error "Python 3.10 ($PYTHON310_CMD) is required but could not be found or installed. Please install it manually and ensure it's in your PATH as '$PYTHON310_CMD'."
+fi
+
 
 # --- Path Configuration ---
 
@@ -207,10 +247,12 @@ jq \
   --arg uv_path "$UV_PATH" \
   --arg server_path "$SERVER_PY_PATH" \
   --arg api_key "$LUMA_API_KEY" \
+  --arg python_cmd "python3.10" \
   '.mcpServers."Luma MCP" = {
       command: $uv_path,
       args: [
           "run",
+          "--python", $python_cmd,
           "--with", "mcp[cli]",
           "--with", "aiohttp",
           "mcp",
