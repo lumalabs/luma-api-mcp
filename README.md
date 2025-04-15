@@ -36,7 +36,6 @@ Open Claude Desktop or any MCP client
 -   `frame1_id`: generation ID (optional)
 
 ## Technical Notes
-- Performance: Uses parallel processing for concurrent generation
 - Keyframes: Providing frame0_image/frame1_image gives more control over video start/end points
 - Video Response Time: Typical video generation takes 15-60 seconds depending on duration and resolution
 - Image Response Time: Typical generation takes 5-15 seconds depending on model complexity
