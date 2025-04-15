@@ -102,12 +102,24 @@ else
         if command_exists curl; then
              info "Attempting uv install via curl | sh ..."
              curl -LsSf https://astral.sh/uv/install.sh | sh && UV_INSTALLED=true
-             # Add uv to PATH for the current session if installed this way
+             # Add uv to PATH for the current script session if installed this way
              if [ "$UV_INSTALLED" = true ]; then
-                 export PATH="$HOME/.cargo/bin:$PATH"
+                 # Source the environment or update PATH - assuming install adds to $HOME/.uv/bin
+                 UV_BIN_DIR="$HOME/.uv/bin"
+                 if [ -d "$UV_BIN_DIR" ]; then
+                     export PATH="$UV_BIN_DIR:$PATH"
+                     info "Added $UV_BIN_DIR to PATH for this session."
+                 else
+                     warn "Expected uv installation directory $UV_BIN_DIR not found after install."
+                     # Fallback to cargo path just in case, though less likely for uv install script
+                     export PATH="$HOME/.cargo/bin:$PATH"
+                 fi
+
                  if ! command_exists uv; then # Check again after modifying PATH
-                     warn "uv installed but might not be in PATH. You may need to restart your shell or add $HOME/.cargo/bin to your PATH manually."
+                     warn "uv installed but command not found in PATH ($PATH). You may need to restart your shell or check the installation location."
                      UV_INSTALLED=false # Mark as failed if not found in path
+                 else
+                     info "uv command found in PATH after installation."
                  fi
              fi
         else

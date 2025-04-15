@@ -39,8 +39,10 @@ async def create_mcp_image_set(
         ]
     if params.style_ref:
         body["style_ref"] = [
-            {"url": style_ref.url, "weight": style_ref.weight}
-            for style_ref in params.style_ref
+            {
+                "url": params.style_ref.url,
+                "weight": params.style_ref.weight,
+            }
         ]
     if params.character_ref:
         body["character_ref"] = {
