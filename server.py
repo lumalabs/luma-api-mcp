@@ -32,14 +32,35 @@ async def create_image(
         - Use the defintions specified in [PARAMETERS] to guide the generation.
 
     [Parameters]
-        prompt: Text description of the image to generate
-        aspect_ratio: Image dimensions - "1:1" (square), "16:9" (landscape), "9:16" (portrait),
-                     "4:3", "3:4", "21:9", "9:21" (default: "16:9")
-        model: AI model to use - "photon-1" (higher quality), "photon-flash-1" (faster) (default: "photon-1")
-        image_ref: Up to 8 reference images with weights to influence generation (optional), if user asks to use image as a reference from an image url that's generated, use image_ref
-        style_ref: A single reference image with weight to influence style (optional), if user asks to use style from an image url that's generated, use style_ref
-        character_ref: Up to 4 character references as image URLs (optional), if user asks to use character from an image url that's generated, use character_ref
-        modify_image_ref: Single image to modify/enhance (optional), if user asks to modify/enhance an image url that's generated, use modify_image_ref
+    prompt: Detailed text description of the image to generate. Be specific about subject, setting, lighting, mood, style, and composition.
+
+    aspect_ratio: Image dimensions
+    - "1:1" (square) - Best for portraits, icons, or symmetrical compositions
+    - "16:9" (landscape) - Ideal for scenic views, cinematic shots (DEFAULT)
+    - "9:16" (portrait) - Perfect for mobile wallpapers or vertical compositions
+    - "4:3" - Standard display format for many devices
+    - "3:4" - Alternative portrait orientation
+    - "21:9" - Ultra-wide cinematic format
+    - "9:21" - Ultra-tall format for specialized vertical content
+
+    model:
+    - "photon-1" - Higher quality with more detailed rendering (DEFAULT)
+    - "photon-flash-1" - Faster generation with slightly reduced detail
+
+    reference_options:
+    - image_ref: Up to 8 reference images with weights (0.1-1.0) to influence overall generation
+    - style_ref: Single reference image with weight to influence artistic style only
+    - character_ref: Up to 4 character references to maintain consistent character appearance
+    - modify_image_ref: Single source image to enhance or modify while preserving core elements
+
+    [Usage Guidelines]
+    1. ALWAYS use character_ref when user requests specific characters or consistent character appearance.
+    2. Use style_ref when user wants to match a particular artistic style but not copy specific content.
+    3. Use image_ref when user wants to influence both content and style of generation.
+    4. Use modify_image_ref when enhancing or altering an existing image while maintaining its core elements.
+    5. For best results, encourage detailed prompts with specific visual descriptions.
+    6. When appropriate, enhance user prompts with additional details about lighting, composition, and atmosphere.
+    7. As required based on what is user asking for, you can also use multiple reference images at once.
 
     [Returns]
         List containing triplets of [image_data, image_url, generation_id] for each image:
