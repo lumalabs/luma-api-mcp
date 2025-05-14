@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/lumalabs-luma-api-mcp-badge.png)](https://mseep.ai/app/lumalabs-luma-api-mcp)
+
 # Luma API MCP
 
 ## Setup
